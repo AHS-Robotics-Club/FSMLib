@@ -1,4 +1,6 @@
-package com.arcrobotics.fsm;
+package com.arcrobotics.fsm.samples;
+
+import com.arcrobotics.fsm.StateMachineBuilder;
 
 public class Sample {
 
