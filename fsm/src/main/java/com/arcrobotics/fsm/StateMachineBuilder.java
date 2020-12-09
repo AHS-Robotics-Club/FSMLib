@@ -10,6 +10,7 @@ public class StateMachineBuilder<T extends Enum<T>> {
     private T currentStateInConfig, initialState, finalState;
     private final Map<T, Map<BooleanSupplier, T>> transitionMap = new HashMap<>();
     private final BooleanSupplier loopEvent;
+    private Runnable loopAction = () -> {};
 
     public StateMachineBuilder(BooleanSupplier loopEvent) {
         this.loopEvent = loopEvent;
@@ -39,6 +40,11 @@ public class StateMachineBuilder<T extends Enum<T>> {
         return this;
     }
 
+    public StateMachineBuilder<T> eachLoop(Runnable action) {
+        loopAction = action;
+        return this;
+    }
+
     public StateMachineBuilder<T> endOn(T state) {
         finalState = state;
         return this;
@@ -55,6 +61,7 @@ public class StateMachineBuilder<T extends Enum<T>> {
                     isStarted[0] = false;
                 }
             });
+            loopAction.run();
         }
     }
 
