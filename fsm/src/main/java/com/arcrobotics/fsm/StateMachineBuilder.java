@@ -50,6 +50,21 @@ public class StateMachineBuilder<T extends Enum<T>> {
         return this;
     }
 
+    public StateMachineBuilder<T> build() throws IllegalStateException {
+        // checks to make sure all values in transition map are in state map
+        for (T state : stateMap.keySet()) {
+            transitionMap.get(state).forEach((k, v) -> {
+                if (!stateMap.containsKey(v) && v != finalState) {
+                    throw new IllegalStateException(
+                            "Builder was not created properly. Expected state map to contain "
+                            + v.name() + " but did not."
+                    );
+                }
+            });
+        }
+        return this;
+    }
+
     public void run() {
         final T[] currState = (T[]) new Enum[]{initialState};
         final boolean[] isStarted = {true};
