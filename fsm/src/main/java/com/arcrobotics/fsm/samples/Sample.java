@@ -35,7 +35,8 @@ public class Sample {
                 .endOn(MyEnum.END)
                 .build();
 
-        builder.run();
+        while (builder.isRunning())
+            builder.run();
         System.out.println("Exited Loop");
     }
 

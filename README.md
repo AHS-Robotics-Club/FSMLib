@@ -53,3 +53,12 @@ builder
   ...
   .build(); // will throw an IllegalStateException if built incorrectly
 ```
+
+To run a single iteration of the FSM, simply call `run()` as such:
+```java
+builder.run();
+```
+You can put this in your own control loop or you can simply do the following if you just want to run the FSM:
+```java
+while (builder.isRunning()) builder.run();
+```
