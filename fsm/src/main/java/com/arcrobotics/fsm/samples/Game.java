@@ -106,7 +106,8 @@ public class Game {
 
                 .build();
 
-        gameBuilder.run();
+        while (gameBuilder.isRunning())
+            gameBuilder.run();
         System.out.println("Game over.");
     }
 
