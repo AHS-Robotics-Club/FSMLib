@@ -19,6 +19,7 @@ public class SequentialBuilder<T extends Enum<T>> extends StateMachineBuilder<T>
         super.build();
         // checks to make sure everything is sequential
         Set<T> seen = new HashSet<>();  // our check set
+        seen.add(initialState); // add initial state - cannot loop back to initial state
         for (T state : transitionMap.keySet()) {
             transitionMap.get(state).forEach((k, v) -> {
                 if (seen.contains(v)) {

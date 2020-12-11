@@ -7,7 +7,8 @@ import java.util.function.BooleanSupplier;
 public class StateMachineBuilder<T extends Enum<T>> {
 
     protected final Map<T, Runnable> stateMap = new HashMap<>();
-    private T currentStateInConfig, initialState, currState, finalState;
+    private T currentStateInConfig, currState, finalState;
+    protected T initialState;
     protected final Map<T, Map<BooleanSupplier, T>> transitionMap = new HashMap<>();
     private final BooleanSupplier loopEvent;
     private boolean isStarted = true;

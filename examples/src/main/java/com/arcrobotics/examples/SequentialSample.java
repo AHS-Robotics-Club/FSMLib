@@ -1,4 +1,4 @@
-package com.arcrobotics.fsm.samples;
+package com.arcrobotics.examples;
 
 import com.arcrobotics.fsm.SequentialBuilder;
 import com.arcrobotics.fsm.StateMachineBuilder;

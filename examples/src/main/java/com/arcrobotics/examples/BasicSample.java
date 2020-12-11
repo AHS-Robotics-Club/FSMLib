@@ -1,9 +1,9 @@
-package com.arcrobotics.fsm.samples;
+package com.arcrobotics.examples;
 
 import com.arcrobotics.fsm.SequentialBuilder;
 import com.arcrobotics.fsm.StateMachineBuilder;
 
-public class Sample {
+public class BasicSample {
 
     public enum MyEnum {
         LOW, MEDIUM, HIGH, END

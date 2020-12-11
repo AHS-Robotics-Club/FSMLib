@@ -1,2 +1,3 @@
-include ':fsm'
+include ':examples'
+include ':core'
 rootProject.name = "FSM"
