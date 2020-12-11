@@ -6,9 +6,9 @@ import java.util.function.BooleanSupplier;
 
 public class StateMachineBuilder<T extends Enum<T>> {
 
-    private final Map<T, Runnable> stateMap = new HashMap<>();
-    private T currentStateInConfig, initialState, finalState, currState;
-    private final Map<T, Map<BooleanSupplier, T>> transitionMap = new HashMap<>();
+    protected final Map<T, Runnable> stateMap = new HashMap<>();
+    private T currentStateInConfig, initialState, currState, finalState;
+    protected final Map<T, Map<BooleanSupplier, T>> transitionMap = new HashMap<>();
     private final BooleanSupplier loopEvent;
     private boolean isStarted = true;
     private Runnable loopAction = () -> {};
@@ -27,7 +27,6 @@ public class StateMachineBuilder<T extends Enum<T>> {
      */
     public StateMachineBuilder<T> startOn(T state) {
         initialState = state;
-        currState =  initialState;
         return this;
     }
 
@@ -83,6 +82,7 @@ public class StateMachineBuilder<T extends Enum<T>> {
      * @throws IllegalStateException    if the builder was created improperly
      */
     public StateMachineBuilder<T> build() throws IllegalStateException {
+        currState = initialState;
         // checks to make sure all values in transition map are in state map
         for (T state : stateMap.keySet()) {
             transitionMap.get(state).forEach((k, v) -> {
