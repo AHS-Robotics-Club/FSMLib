@@ -23,4 +23,6 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
-      run: ./gradlew :fsm:clean :fsm:build
+      run: ./gradlew :core:clean :core:build :core:test
+    - name: Run Examples
+      run: ./gradlew :examples:build
