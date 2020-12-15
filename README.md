@@ -44,21 +44,26 @@ You can add an `endOn()` binding which will end the FSM loop once that state is 
 ```java
 builder
   ...
-  .endOn(MyEnum.END_STATE) // replace this with your end state (optional)
-  ...;
+  .endOn(MyEnum.END_STATE_1, MyEnum.END_STATE_2, ...); // replace this with your end state (optional)
 ```
-To make sure you built the FSM properly, you will end the construction with the `build()` call.
+To make sure you built the FSM properly, you make the `build()` call. This outputs a `StateMachine<T>` object based on the construction of the builder.
 ```java
-builder
-  ...
-  .build(); // will throw an IllegalStateException if built incorrectly
+StateMachine<MyEnum> fsm = builder.build(); // will throw a BuildFailureException if built incorrectly
 ```
+Alternatively, you can chain the construction and then output to the model.
+```java
+StateMachine<MyEnum> fsm
+	= new StateMachineBuilder<MyEnum>(...)
+		...
+		.build();
+```
+If the transitions are incorrect, then a `MissingStateException` can be thrown, which is a type of `BuildFailureException`.
 
-To run a single iteration of the FSM, simply call `run()` as such:
+To run a single iteration of the FSM, simply call `run()` on the FSM as such:
 ```java
-builder.run();
+fsm.run();
 ```
 You can put this in your own control loop or you can simply do the following if you just want to run the FSM:
 ```java
-while (builder.isRunning()) builder.run();
+while (fsm.isRunning()) fsm.run();
 ```

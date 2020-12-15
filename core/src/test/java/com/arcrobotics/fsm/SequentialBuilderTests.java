@@ -1,16 +1,15 @@
 package com.arcrobotics.fsm;
 
+import com.arcrobotics.fsm.builders.SequentialBuilder;
 import com.arcrobotics.fsm.builders.StateMachineBuilder;
-import com.arcrobotics.fsm.exceptions.MissingStateException;
+import com.arcrobotics.fsm.exceptions.BuildFailureException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-public class StateMachineBuilderTests {
+public class SequentialBuilderTests {
 
     enum MyEnum {
         ONE, TWO, THREE, FOUR
@@ -22,24 +21,21 @@ public class StateMachineBuilderTests {
 
     @BeforeEach
     public void setup() {
-        builder = new StateMachineBuilder<>(() -> true);
+        builder = new SequentialBuilder<>(() -> true);
         x = 0;
     }
 
     @Test
     public void basicTest() {
         builder
-            .startOn(MyEnum.ONE)
-            .onState(MyEnum.ONE, () -> x = 1)
-            .transitionOn(MyEnum.TWO, () -> x == 1)
-            .onState(MyEnum.TWO, () -> x = 2)
-            .transitionOn(MyEnum.THREE, () -> x == 2)
-            .endOn(MyEnum.THREE);
+                .startOn(MyEnum.ONE)
+                .onState(MyEnum.ONE, () -> x = 1)
+                .transitionOn(MyEnum.TWO, () -> x == 1)
+                .onState(MyEnum.TWO, () -> x = 2)
+                .transitionOn(MyEnum.THREE, () -> x == 2)
+                .endOn(MyEnum.THREE);
 
         fsm = builder.build();
-
-        assertEquals(MyEnum.ONE, fsm.first());
-        assertEquals(Collections.singletonList(MyEnum.THREE), fsm.last());
 
         assertTrue(fsm.isRunning());
         assertEquals(0, x);
@@ -71,35 +67,23 @@ public class StateMachineBuilderTests {
                 .transitionOn(MyEnum.ONE, () -> x == 3)
                 .endOn(MyEnum.FOUR);
 
-        fsm = builder.build();
-
-        assertTrue(fsm.isRunning());
-        assertEquals(0, x);
-        fsm.run();
-        assertEquals(1, x);
-        fsm.run();
-        assertEquals(2, x);
-        fsm.run();
-        assertEquals(3, x);
-        fsm.run();
-        assertEquals(3, x);
-        fsm.run();
-        assertEquals(4, x);
-        fsm.run();
-        assertEquals(4, x);
-        assertFalse(fsm.isRunning());
+        assertThrows(BuildFailureException.class, builder::build);
     }
 
     @Test
-    public void testImproperBuild() {
+    public void sequentialTest() {
         builder
                 .startOn(MyEnum.ONE)
                 .onState(MyEnum.ONE, () -> x = 1)
                 .transitionOn(MyEnum.TWO, () -> x == 1)
+                .onState(MyEnum.TWO, () -> x = 2)
                 .transitionOn(MyEnum.THREE, () -> x == 2)
-                .endOn(MyEnum.THREE);
+                .transitionOn(MyEnum.FOUR, () -> x == 4)
+                .endOn(MyEnum.THREE, MyEnum.FOUR);
 
-        assertThrows(MissingStateException.class, builder::build);
+        fsm = builder.build();
+
+        assert true;
     }
 
 }

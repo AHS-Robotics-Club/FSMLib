@@ -1,7 +1,7 @@
 package com.arcrobotics.examples;
 
-import com.arcrobotics.fsm.SequentialBuilder;
-import com.arcrobotics.fsm.StateMachineBuilder;
+import com.arcrobotics.fsm.StateMachine;
+import com.arcrobotics.fsm.builders.StateMachineBuilder;
 
 public class BasicSample {
 
@@ -13,7 +13,7 @@ public class BasicSample {
     private static int a = 0;
 
     public static void main(String[] args) {
-        StateMachineBuilder<MyEnum> builder = new StateMachineBuilder<MyEnum>(() -> true)
+        StateMachine<MyEnum> fsm = new StateMachineBuilder<MyEnum>(() -> true)
                 .startOn(MyEnum.LOW)
                 .onState(MyEnum.LOW, () -> {
                     System.out.println("Low State");
@@ -36,8 +36,8 @@ public class BasicSample {
                 .endOn(MyEnum.END)
                 .build();
 
-        while (builder.isRunning())
-            builder.run();
+        while (fsm.isRunning())
+            fsm.run();
         System.out.println("Exited Loop");
     }
 

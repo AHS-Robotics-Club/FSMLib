@@ -1,6 +1,7 @@
 package com.arcrobotics.examples;
 
-import com.arcrobotics.fsm.StateMachineBuilder;
+import com.arcrobotics.fsm.StateMachine;
+import com.arcrobotics.fsm.builders.StateMachineBuilder;
 import java.util.Scanner;
 
 /**
@@ -61,7 +62,7 @@ public class Game {
     private static int userAnswer = 0;
 
     public static void main(String[] args) {
-        StateMachineBuilder<GameState> gameBuilder = new StateMachineBuilder<GameState>(
+        StateMachine<GameState> game = new StateMachineBuilder<GameState>(
                 () -> !userInput.equalsIgnoreCase("Q"))
                 .startOn(GameState.START)
 
@@ -106,8 +107,8 @@ public class Game {
 
                 .build();
 
-        while (gameBuilder.isRunning())
-            gameBuilder.run();
+        while (game.isRunning())
+            game.run();
         System.out.println("Game over.");
     }
 
