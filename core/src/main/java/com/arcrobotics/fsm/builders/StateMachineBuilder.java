@@ -14,7 +14,7 @@ public class StateMachineBuilder<T extends Enum<T>> {
 
     protected final Map<T, Runnable> stateMap = new HashMap<>();
     private T currentStateInConfig;
-    private List<T> finalStates;
+    protected List<T> finalStates;
     protected T initialState;
     protected final Map<T, Map<BooleanSupplier, T>> transitionMap = new HashMap<>();
     private final BooleanSupplier loopEvent;

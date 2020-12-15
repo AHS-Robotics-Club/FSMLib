@@ -33,7 +33,7 @@ public class SequentialBuilder<T extends Enum<T>> extends StateMachineBuilder<T>
         seen.add(initialState); // add initial state - cannot loop back to initial state
         for (T state : transitionMap.keySet()) {
             transitionMap.get(state).forEach((k, v) -> {
-                if (seen.contains(v)) {
+                if (seen.contains(v) && !finalStates.contains(v)) {
                     throw new BuildFailureException("The state machine is not sequential. " +
                            v.name() + " is already in the map.");
                 }
