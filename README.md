@@ -1,6 +1,29 @@
-# FSM Builder Lib &emsp; [![](https://jitpack.io/v/JIceberg/StateMachineLib.svg)](https://jitpack.io/#JIceberg/StateMachineLib)
+# FSM Builder Lib [![](https://jitpack.io/v/JIceberg/StateMachineLib.svg)](https://jitpack.io/#JIceberg/StateMachineLib)
 
 A simple library to build custom finite state machines in Java 8.
+
+## Installation
+
+Install it using your standard jitpack convention for whatever build tool you use.
+For gradle, this would be:
+
+1. In your `build.gradle`:
+```groovy
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+
+2. Wherever you manage your dependencies:
+```groovy
+dependencies {
+    ...
+    implementation "com.github.JIceberg:StateMachineLib:v2.1" // replace 2.1 with the current version
+}
+```
 
 ## Usage
 
