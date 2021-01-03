@@ -1,4 +1,4 @@
-# FSM Builder Lib
+# FSM Builder Lib &emsp; [![](https://jitpack.io/v/JIceberg/StateMachineLib.svg)](https://jitpack.io/#JIceberg/StateMachineLib)
 
 A simple library to build custom finite state machines in Java 8.
 
