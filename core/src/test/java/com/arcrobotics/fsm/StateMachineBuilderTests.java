@@ -24,6 +24,7 @@ public class StateMachineBuilderTests {
     public void setup() {
         builder = new StateMachineBuilder<>(() -> true);
         x = 0;
+        running = false;
     }
 
     @Test
@@ -100,6 +101,34 @@ public class StateMachineBuilderTests {
                 .endOn(MyEnum.THREE);
 
         assertThrows(MissingStateException.class, builder::build);
+    }
+
+    private boolean running = false;
+
+    @Test
+    public void fromIdleTest() {
+        builder
+                .startOn(MyEnum.ONE)
+                .onState(MyEnum.ONE, () -> x = 1)
+                .transitionOn(MyEnum.TWO, () -> running)
+                .onState(MyEnum.TWO, () -> x = 2)
+                .transitionOn(MyEnum.ONE, () -> false)
+                .endOn(MyEnum.ONE);
+
+        fsm = builder.build();
+        assertEquals(0, x);
+        assertTrue(fsm.isRunning());
+        fsm.run();
+        assertEquals(1, x);
+        fsm.run();
+        assertEquals(1, x);
+        running = true;
+        fsm.run();
+        assertEquals(1, x);
+        fsm.run();
+        assertEquals(2, x);
+        fsm.run();
+        assertEquals(2, x);
     }
 
 }

@@ -37,6 +37,8 @@ public class StateMachine<T extends Enum<T>> {
         this.finalStates = finalStates;
         this.loopAction = loopAction;
         this.loopEvent = loopEvent;
+
+        isStarted = true;
     }
 
     /**
@@ -68,7 +70,7 @@ public class StateMachine<T extends Enum<T>> {
     }
 
     /**
-     * Runs the current
+     * Runs a single iteration of the state machine
      */
     public void run() {
         if (isRunning()) {

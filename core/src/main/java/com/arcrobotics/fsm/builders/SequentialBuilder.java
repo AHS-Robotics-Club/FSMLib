@@ -9,11 +9,11 @@ import java.util.function.BooleanSupplier;
 
 /**
  * A SequentialBuilder builds a state machine that runs states like
- * a tree. States can branch off and the tree has multiple leaves,
+ * a regular tree. States can branch off and the tree has multiple leaves,
  * but the tree's branches cannot intersect. The reason
  * this is called sequential is because it prevents any looping behavior.
  */
-public class SequentialBuilder<T extends Enum<T>> extends StateMachineBuilder<T> {
+public class SequentialBuilder<T extends Enum<T>> extends ConvergentBuilder<T> {
 
     /**
      * Constructs an FSM builder
